@@ -1,8 +1,8 @@
-#summary One-sentence summary of this page.
+#summary Namespace para classes que fazem parte do acesso a dados.
 
 = Introduction =
 
-Add your content here.
+Aqui estão listadas todas as classes e interfaces de acesso a dados que fazem parte do namespace.
 
 
 = Details =
