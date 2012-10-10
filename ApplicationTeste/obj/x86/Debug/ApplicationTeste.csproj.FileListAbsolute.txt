@@ -1,0 +1,12 @@
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\obj\x86\Debug\XFunny.Form1.resources
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\obj\x86\Debug\ApplicationTeste.Properties.Resources.resources
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\bin\Debug\ApplicationTeste.exe
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\bin\Debug\ApplicationTeste.pdb
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\bin\Debug\XFunny.dll
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\bin\Debug\XFunny.pdb
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\obj\x86\Debug\ApplicationTeste.exe
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\obj\x86\Debug\ApplicationTeste.pdb
+C:\Users\Jeysson\Documents\Visual Studio 2010\Projects\XFunny\ApplicationTeste\bin\Debug\ApplicationTeste.exe.config
