@@ -6,9 +6,11 @@ using System.Reflection;
 
 namespace XFunny.QAccess
 {
-    /// <summary>
-    /// Classe base para objetos que representam a estrutura de dados
-    /// </summary>
+    // Summary:
+    //     Provides the abstract (MustInherit in Visual Basic) base class for criteria
+    //     operators.
+    // summary:
+    //      Classe base para objetos que representam a estrutura de dados    
     public abstract class QObjectBase : IObject, IDisposable
     {
         /// <summary>
@@ -30,7 +32,12 @@ namespace XFunny.QAccess
         /// <summary>
         /// Identificador do objeto
         /// </summary>
-        public Guid OCod { get { return _OCod; } }
+        [Constraint(ConstraintAttribute.CSTypeConstraint.Primary)]
+        public Guid OCod 
+        { 
+            get { return _OCod; }
+            set { _OCod = value; }
+        }
 
         /// <summary>
         /// Construtor
@@ -121,7 +128,10 @@ namespace XFunny.QAccess
                     _OCod = Guid.NewGuid();
                     var v = this.GetType().GetProperty("Nome").GetValue(this, null);
                     this._Connection.Insert(this);
-
+                    foreach (PropertyInfo proper in this.GetType().GetProperties().Where(p => p.PropertyType == typeof(XFunny.QFilter.QCollection<>)))
+                    {
+                        this.Connection.Insert(proper.GetValue(this, null) as QObjectBase);
+                    }
                 }
                 else this._Connection.Update(this);
 

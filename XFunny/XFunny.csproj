@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,11 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QAccess\Conditions.cs" />
+    <Compile Include="QAccess\AssociationAttribute.cs" />
+    <Compile Include="QFilter\Conditions.cs" />
+    <Compile Include="QFilter\CSTyteOperator.cs" />
     <Compile Include="QAccess\InitConnection.cs" />
     <Compile Include="QAccess\IObject.cs" />
     <Compile Include="QAccess\NonPersistentAttribute.cs" />
-    <Compile Include="QAccess\QCollection.cs" />
+    <Compile Include="QFilter\Operand.cs" />
+    <Compile Include="QFilter\QCollection.cs" />
     <Compile Include="QAccess\QConnect.cs" />
     <Compile Include="QAccess\QObjectBase.cs" />
   </ItemGroup>
