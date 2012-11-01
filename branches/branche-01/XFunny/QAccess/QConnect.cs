@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Reflection;
 using System.ComponentModel;
 using System.Data;
+using XFunny.QFilter;
 
 namespace XFunny.QAccess
 {
@@ -80,10 +81,20 @@ namespace XFunny.QAccess
         /// <summary>
         /// Tranforma as classes em objetos relacionais
         /// </summary>
-        protected internal void TransformerObject()
+        internal void TransformerObject()
         {
             foreach (var classe in Assembly.GetEntryAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(QObjectBase))))            
-                CreateTable(classe);            
+                CreateTable(classe); 
+            //Cria os relacionamentos entre os objetos
+            foreach (var classe in Assembly.GetEntryAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(QObjectBase))))
+            {
+                // Monta os campo e domínios da tabela
+                foreach (var proper in classe.GetProperties().Where(p => p.GetCustomAttributes(typeof(AssociationAttribute), false).Count() > 0))
+                {
+                    var customAttribute = Attribute.GetCustomAttribute(proper, typeof(AssociationAttribute)) as AssociationAttribute;
+                    CreateConstraint(classe.Name, proper.PropertyType.Name, "FK_" + classe.Name, proper.Name, "OCod", customAttribute.Associate.Equals(AssociationAttribute.CSTypeAssociate.Composition));
+                }                    
+            }            
         }
 
         /// <summary>
@@ -99,7 +110,7 @@ namespace XFunny.QAccess
         /// Seta nulo para os objetos istanciados
         /// </summary>
         /// <param name="disposing">verdadeiro para desstruir</param>
-        protected void Dispose(bool disposing)
+        internal void Dispose(bool disposing)
         {
             if (disposing)
                 if (_Connect != null)
@@ -212,7 +223,7 @@ namespace XFunny.QAccess
                         sbQuery.AppendLine(string.Format("CREATE TABLE {0}.dbo.{1}", _Project.GetName().Name, pType.Name));
                         sbQuery.AppendLine(" (");
                         // Monta os campo e domínios da tabela
-                        foreach (var proper in pType.GetProperties())
+                        foreach (var proper in pType.GetProperties().Where(p => p.PropertyType != typeof(QCollection<>)))
                             if (proper.GetCustomAttributes(typeof(NonPersistentAttribute), false).Count() == 0)
                             {
                                 var tipo = GetSqlType(proper.PropertyType);
@@ -237,7 +248,9 @@ namespace XFunny.QAccess
                         //
                         command.CommandText = sbQuery.ToString();
                         command.ExecuteNonQuery();
-                    }
+                        //Cria a chave primária para o objeto
+                        CreateConstraint(pType.Name, String.Format("PK_{0}", pType.Name), "OCod");
+                    }  
                 }
             }catch(SqlException ex)
             {
@@ -266,6 +279,53 @@ namespace XFunny.QAccess
             return exists;
         }
 
+        /// <summary>
+        /// Cria a chave primaria da tabela
+        /// </summary>
+        /// <param name="pNameTable">Nome da tabela</param>
+        /// <param name="pNameConstraint">Nome da Chave Primária</param>
+        /// <param name="pKey">Nome do campo chave primária</param>
+        private void CreateConstraint(string pNameTable, string pNameConstraint, string pKey)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(string.Format(" ALTER TABLE {0}.dbo.{1}", _Project.GetName().Name, pNameTable));
+            sb.AppendLine(string.Format(" ADD CONSTRAINT {0}", pNameConstraint));            
+            sb.Append(string.Format(" PRIMARY KEY ({0})", pKey));            
+            //
+            using (var command = this._Connect.CreateCommand())
+            {
+                command.CommandText = sb.ToString();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// Cria as cronstraints na base de dados para cada tabela
+        /// </summary>
+        /// <param name="pNameTable">Nome da tabela da constraint</param>
+        /// <param name="pReferencesTable">Nome da tabela referenciada da constraint para foreing key</param>
+        /// <param name="pNameConstraint">Nome da constrait</param>       
+        /// <param name="pKey">Campos que serão chave</param>
+        /// <param name="pReferenceKey">Campos refenciados para foreing key</param>
+        /// <param name="pCascade">tipo de atualização</param>
+        private void CreateConstraint(string pNameTable, string pReferencesTable, string pNameConstraint, string pKey, string pReferenceKey, bool pCascade = false)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(string.Format(" ALTER TABLE {0}.dbo.{1}", _Project.GetName().Name, pNameTable));
+            sb.AppendLine(string.Format(" ADD CONSTRAINT {0}", pNameConstraint));            
+            sb.AppendLine(string.Format(" FOREIGN KEY ({0})", pKey));                     
+            sb.AppendLine(string.Format(" REFERENCES {0} ({1}) ", pReferencesTable, pReferenceKey));           
+            //
+            if (pCascade)                
+                sb.AppendLine("ON DELETE CASCADE ON UPDATE CASCADE");                               
+            //            
+            using (var command = this._Connect.CreateCommand())
+            {
+                command.CommandText = sb.ToString();
+                command.ExecuteNonQuery();
+            }
+
+        }
 
         /// <summary>
         /// Insere os primeiros valores da tabela de controle do framework 
@@ -287,7 +347,7 @@ namespace XFunny.QAccess
         /// <summary>
         /// Armazena os valores do objeto
         /// </summary>        
-        protected internal void Insert(QObjectBase pObjectBase)
+        internal void Insert(QObjectBase pObjectBase)
         {
             bool first = true;            
             StringBuilder sbQuery = new StringBuilder();
@@ -347,8 +407,9 @@ namespace XFunny.QAccess
         /// <summary>
         /// Atualiza os valores do objeto 
         /// </summary>        
-        protected internal void Update(QObjectBase pObjectBase)
-        {            
+        internal void Update(QObjectBase pObjectBase)
+        {
+            bool first = true;
             StringBuilder sbQuery = new StringBuilder();            
             sbQuery.AppendLine(string.Format("UPDATE {0}.dbo.{1} ", _Project.GetName().Name, pObjectBase.GetType().Name));
             sbQuery.AppendLine(" SET ");
@@ -357,10 +418,27 @@ namespace XFunny.QAccess
             {
                 if (proper.GetCustomAttributes(typeof(NonPersistentAttribute), false).Count() == 0 &&
                     !proper.PropertyType.Equals(typeof(Guid)))
-                {               
-                    sbQuery.Append(proper.Name);
-                    sbQuery.Append(" = ");
-                    sbQuery.Append(proper.GetValue(pObjectBase, null));
+                {
+                    if (first)
+                    {
+                        sbQuery.AppendLine(proper.Name);
+                        sbQuery.Append(" = ");
+                        if (proper.PropertyType == typeof(string) || proper.PropertyType == typeof(char))
+                            sbQuery.Append(String.Format("'{0}'", proper.GetValue(pObjectBase, null)));
+                        else
+                            sbQuery.Append(proper.GetValue(pObjectBase, null));
+                        first = false;
+                    }
+                    else
+                    {
+                        sbQuery.Append(",");
+                        sbQuery.Append(proper.Name);
+                        sbQuery.Append(" = ");
+                        if (proper.PropertyType == typeof(string) || proper.PropertyType == typeof(char))
+                            sbQuery.Append(String.Format("'{0}'", proper.GetValue(pObjectBase, null)));
+                        else
+                            sbQuery.Append(proper.GetValue(pObjectBase, null));
+                    }
                     sbQuery.AppendLine();                   
                 }
             }
@@ -423,6 +501,30 @@ namespace XFunny.QAccess
             if (string.IsNullOrEmpty(_ConnectionString))
                 _ConnectionString = pConnectionString;
         
-        }        
+        }
+
+        internal DataTable ExcuteQuery(string p)
+        {
+            try
+            {
+                this.Open();
+                using (var command = this._Connect.CreateCommand())
+                {
+                    command.CommandText = p;
+                    var dr = command.ExecuteReader();
+                    DataTable dtb = new DataTable();
+                    dtb.Load(dr);
+                    dr.Close();
+                    return dtb;
+                }
+            }
+            finally { this.Close(); }
+        }
+
+        enum CSTypeConstraint
+        {
+            Primary = 0,
+            Foreign = 1
+        }
     }
 }
