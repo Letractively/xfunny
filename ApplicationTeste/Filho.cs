@@ -11,7 +11,7 @@ namespace ApplicationTeste
         public string Nome { get; set; }
         public int Idade { get; set; }
         
-        [Association("Pai-Filho", AssociationAttribute.CSTypeAssociate.Aggregation)]
+        [Association("Pai_Filho", AssociationAttribute.CSTypeAssociate.Composition)]
         public Pessoa pai { get; set; }
     }
 }
