@@ -89,10 +89,12 @@ namespace XFunny.QAccess
             foreach (var classe in Assembly.GetEntryAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(QObjectBase))))
             {
                 // Monta os campo e domínios da tabela
-                foreach (var proper in classe.GetProperties().Where(p => p.GetCustomAttributes(typeof(AssociationAttribute), false).Count() > 0))
-                {
+                foreach (var proper in classe.GetProperties()
+                    .Where(p => p.GetCustomAttributes(typeof(AssociationAttribute), false).Count() > 0 && p.PropertyType.IsSubclassOf(typeof(QObjectBase))))
+                {                    
                     var customAttribute = Attribute.GetCustomAttribute(proper, typeof(AssociationAttribute)) as AssociationAttribute;
-                    CreateConstraint(classe.Name, proper.PropertyType.Name, "FK_" + classe.Name, proper.Name, "OCod", customAttribute.Associate.Equals(AssociationAttribute.CSTypeAssociate.Composition));
+                    if (!ExistsConstraint("FK_" + customAttribute.Name))
+                        CreateConstraint(classe.Name, proper.PropertyType.Name, "FK_" + customAttribute.Name, proper.Name, "OCod", customAttribute.Associate.Equals(AssociationAttribute.CSTypeAssociate.Composition));
                 }                    
             }            
         }
@@ -226,21 +228,32 @@ namespace XFunny.QAccess
                         foreach (var proper in pType.GetProperties().Where(p => p.PropertyType != typeof(QCollection<>)))
                             if (proper.GetCustomAttributes(typeof(NonPersistentAttribute), false).Count() == 0)
                             {
-                                var tipo = GetSqlType(proper.PropertyType);
+                                SqlDbType tipo;
+                                if (proper.PropertyType.IsSubclassOf(typeof(QObjectBase)))
+                                    tipo = GetSqlType(typeof(Guid));
+                                else
+                                    tipo = GetSqlType(proper.PropertyType);
+                                //
                                 if (first)
                                 {
                                     first = false;
                                     if (tipo == SqlDbType.NVarChar)
                                         sbQuery.AppendLine(string.Format(" {0} {1}(255)", proper.Name, tipo));
                                     else
-                                        sbQuery.AppendLine(string.Format(" {0} {1}", proper.Name, tipo));
+                                        if(tipo == SqlDbType.UniqueIdentifier)
+                                            sbQuery.AppendLine(string.Format(" {0} {1} NOT NULL", proper.Name, tipo));
+                                        else
+                                            sbQuery.AppendLine(string.Format(" {0} {1}", proper.Name, tipo));
                                 }
                                 else 
                                 {
                                     if (tipo == SqlDbType.NVarChar)
                                         sbQuery.AppendLine(string.Format(", {0} {1}(255)", proper.Name, GetSqlType(proper.PropertyType))); 
                                     else
-                                        sbQuery.AppendLine(string.Format(", {0} {1}", proper.Name, GetSqlType(proper.PropertyType))); 
+                                        if (tipo == SqlDbType.UniqueIdentifier)
+                                            sbQuery.AppendLine(string.Format(", {0} {1} NOT NULL", proper.Name, tipo));
+                                        else
+                                            sbQuery.AppendLine(string.Format(", {0} {1}", proper.Name, GetSqlType(proper.PropertyType))); 
                                 }
                             }
                         //
@@ -248,14 +261,36 @@ namespace XFunny.QAccess
                         //
                         command.CommandText = sbQuery.ToString();
                         command.ExecuteNonQuery();
-                        //Cria a chave primária para o objeto
-                        CreateConstraint(pType.Name, String.Format("PK_{0}", pType.Name), "OCod");
+                        if(!ExistsConstraint(string.Format("PK_{0}",pType.Name)))
+                            //Cria a chave primária para o objeto
+                            CreateConstraint(pType.Name, String.Format("PK_{0}", pType.Name), "OCod");
                     }  
                 }
             }catch(SqlException ex)
             {
                 throw new ApplicationException(string.Format("Error: {0}\n\t Description: {1}", ex.Message, ex.StackTrace));
             }            
+        }
+
+        /// <summary>
+        /// Verifica se já existe uma constraint na base de dados
+        /// </summary>
+        /// <param name="p">Nome da constraint</param>
+        /// <returns>Se existir a constraint retornará verdadeiro</returns>
+        private bool ExistsConstraint(string pName)
+        {
+            bool exists;
+            StringBuilder sbQuery = new StringBuilder();
+            sbQuery.AppendLine("SELECT * ");
+            sbQuery.AppendLine(string.Format("  FROM {0}.INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS", _Project.GetName().Name));
+            sbQuery.AppendLine(string.Format(" WHERE CONSTRAINT_NAME ='{0}'", pName));
+            //
+            var command = this._Connect.CreateCommand();
+            command.CommandText = sbQuery.ToString();
+            var dr = command.ExecuteReader();
+            exists = dr.HasRows;
+            dr.Close();
+            return exists;
         }
 
         /// <summary>
@@ -313,8 +348,8 @@ namespace XFunny.QAccess
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(string.Format(" ALTER TABLE {0}.dbo.{1}", _Project.GetName().Name, pNameTable));
             sb.AppendLine(string.Format(" ADD CONSTRAINT {0}", pNameConstraint));            
-            sb.AppendLine(string.Format(" FOREIGN KEY ({0})", pKey));                     
-            sb.AppendLine(string.Format(" REFERENCES {0} ({1}) ", pReferencesTable, pReferenceKey));           
+            sb.AppendLine(string.Format(" FOREIGN KEY ({0})", pKey));
+            sb.AppendLine(string.Format(" REFERENCES {0}.dbo.{1} ({2}) ", _Project.GetName().Name, pReferencesTable, pReferenceKey));           
             //
             if (pCascade)                
                 sb.AppendLine("ON DELETE CASCADE ON UPDATE CASCADE");                               
