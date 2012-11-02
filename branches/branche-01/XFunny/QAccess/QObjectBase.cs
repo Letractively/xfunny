@@ -126,7 +126,7 @@ namespace XFunny.QAccess
                 if (_OCod.Equals(Guid.Empty))
                 {
                     _OCod = Guid.NewGuid();
-                    var v = this.GetType().GetProperty("Nome").GetValue(this, null);
+                    
                     this._Connection.Insert(this);
                     foreach (PropertyInfo proper in this.GetType().GetProperties().Where(p => p.PropertyType == typeof(XFunny.QFilter.QCollection<>)))
                     {

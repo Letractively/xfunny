@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Data.Linq;
-using XFunny.QAccess;
 using XFunny.QFilter;
 using ApplicationTeste;
 
@@ -23,6 +17,7 @@ namespace XFunny
             tst.Braco = true;
             tst.Cabeca = false;
             tst.Perna = false;
+            tst.Filhos = new QCollection<Filho>();
             tst.Filhos.Add(new Filho() { Idade = 22, Nome = "Filho", pai = tst });
             tst.Save();
 
