@@ -76,6 +76,8 @@ namespace XFunny.QFilter
                     //
                     if (p[index + 2].Equals("?"))
                         op.Right = argsobj[index];
+                    else if ((p[index + 2].Equals("'?'")))
+                        op.Right = String.Format("'{0}'", argsobj[index]);
                     else
                         op.Right = p[index + 2];
                     c._Fields.Add(op);
@@ -98,20 +100,27 @@ namespace XFunny.QFilter
             throw new NotImplementedException();
         }
 
-
+        /// <summary>
+        /// Monta a query para consulta na base de dados da aplicação
+        /// </summary>
+        /// <typeparam name="T">Tabela objeto a ser consultado</typeparam>
+        /// <returns>Query com as condições de consulta</returns>
         internal string GetQuery<T>()
         {
             bool first = true;
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            sb.Append(string.Format("SELECT * FROM {0} WHERE ", typeof(T).Name));
+            System.Text.StringBuilder sbQuery = new System.Text.StringBuilder();
+            sbQuery.Append(string.Format("SELECT * FROM {0} ", typeof(T).Name));
+
+            if (this._Fields.Count > 0)
+                sbQuery.AppendLine(" WHERE ");
             foreach (var item in this._Fields)
             {
                 if (!first)
-                    sb.AppendLine("AND");
+                    sbQuery.AppendLine("AND");
 
-                sb.AppendLine(item.Join());
+                sbQuery.AppendLine(item.Join());
             }
-            return sb.ToString();
+            return sbQuery.ToString();
         }
     }
 }

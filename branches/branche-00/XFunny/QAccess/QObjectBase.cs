@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using XFunny.QFilter;
 
 namespace XFunny.QAccess
 {
@@ -129,9 +130,10 @@ namespace XFunny.QAccess
                     
                     this._Connection.Insert(this);
                     //salva os objetos da coleção
-                    foreach (PropertyInfo proper in this.GetType().GetProperties().Where(p => p.PropertyType == typeof(XFunny.QFilter.QCollection<>)))
+                    foreach (PropertyInfo proper in this.GetType().GetProperties())
                     {
-                        this.Connection.Insert(proper.GetValue(this, null) as QObjectBase);
+                        if(proper.PropertyType.IsGenericType && proper.PropertyType.GetGenericTypeDefinition().Equals(typeof(QCollection<>)))
+                            this.Connection.Insert(proper.GetValue(this, null) as QObjectBase);
                     }
                 }
                 else this._Connection.Update(this);
