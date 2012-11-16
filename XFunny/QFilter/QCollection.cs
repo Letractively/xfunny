@@ -19,6 +19,11 @@ namespace XFunny.QFilter
 
     {
         /// <summary>
+        /// Provedor de conexão com a base de dados
+        /// </summary>
+        protected internal QConnect _Connect;
+        
+        /// <summary>
         /// Lista com os objetos adicionados a coleção
         /// </summary>
         protected internal List<T> collection;
@@ -35,13 +40,17 @@ namespace XFunny.QFilter
         /// <param name="pConnect"></param>
         /// <param name="pConditions"></param>
         public QCollection(QConnect pConnect, Conditions pConditions)
-        {            
-            var t = Task<string>.Factory.StartNew(() =>
+        {
+            this._Connect = pConnect;
+
+            var tarefa = Task<string>.Factory.StartNew(() =>
             {
                 return pConditions.GetQuery<T>();
             });
-            t.Wait();
-            ConvetDataTable(pConnect.ExcuteQuery(t.Result));
+
+            tarefa.Wait();
+
+            ConvetDataTable(this._Connect.ExcuteQuery(tarefa.Result));
         }
 
         private void ConvetDataTable(System.Data.DataTable dataTable)
@@ -55,8 +64,14 @@ namespace XFunny.QFilter
                 {
                     if (proper.GetCustomAttributes(typeof(NonPersistentAttribute), false).Count() == 0)
                     {
+                        if (proper.PropertyType.IsGenericType && proper.PropertyType.GetGenericTypeDefinition().Equals(typeof(QCollection<>)))                        
+                        {
+                            Type tipo = proper.PropertyType;
 
-                        proper.SetValue(obj, row[proper.Name], null);
+                            proper.SetValue(obj, Activator.CreateInstance(tipo, this._Connect, Conditions.Values("OCod = '?'", row["OCod"])), null);
+                        }
+                        else
+                            proper.SetValue(obj, row[proper.Name], null);
                     }
                 }
 
