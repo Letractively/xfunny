@@ -22,7 +22,13 @@ namespace XFunny.QFilter
         /// Lista com os objetos adicionados a coleção
         /// </summary>
         protected internal List<T> collection;
-       
+
+
+        public QCollection() 
+        {
+            this.collection = new List<T>();
+        }
+
         /// <summary>
         /// 
         /// </summary>

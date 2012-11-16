@@ -128,6 +128,7 @@ namespace XFunny.QAccess
                     _OCod = Guid.NewGuid();
                     
                     this._Connection.Insert(this);
+                    //salva os objetos da coleção
                     foreach (PropertyInfo proper in this.GetType().GetProperties().Where(p => p.PropertyType == typeof(XFunny.QFilter.QCollection<>)))
                     {
                         this.Connection.Insert(proper.GetValue(this, null) as QObjectBase);
@@ -139,7 +140,18 @@ namespace XFunny.QAccess
             }
             finally { _Connection.Close(); }
         }
-        
+
+        /// <summary>
+        /// Remove o objeto da base de dados
+        /// </summary>
+        public void Delete() 
+        {
+            _Connection.Open();
+            OnDeleting();
+            _Connection.Delete(this);
+            OnDeleted();
+        }
+
         /// <summary>
         /// Retorna o identificador do objeto
         /// </summary>
