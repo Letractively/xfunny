@@ -12,7 +12,8 @@ namespace ApplicationTeste
         public bool Cabeca { get; set; }
         public bool Braco { get; set; }
         public bool Perna { get; set; }
-                
+        
+        [Association("Pai_Filho", AssociationAttribute.CSTypeAssociate.Composition)]
         public QCollection<Filho> Filhos { get; set; }
     }
 }
