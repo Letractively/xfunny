@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
-using System.Configuration;
 using System.Reflection;
 using System.ComponentModel;
 using System.Data;
 using XFunny.QFilter;
+using XFunny.QAccess;
 
-namespace XFunny.QAccess
+namespace XFunny.QConnecting
 {
     /// <summary>
     /// Classe de gerenciamento de conexão do framework
@@ -88,7 +88,7 @@ namespace XFunny.QAccess
             //Cria os relacionamentos entre os objetos
             foreach (var classe in Assembly.GetEntryAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(QObjectBase))))
             {
-                // Monta os campo e domínios da tabela
+                // Monta os campos e domínios da tabela
                 foreach (var proper in classe.GetProperties()
                     .Where(p => p.GetCustomAttributes(typeof(AssociationAttribute), false).Count() > 0 && p.PropertyType.IsSubclassOf(typeof(QObjectBase))))
                 {                    
@@ -182,7 +182,7 @@ namespace XFunny.QAccess
                     command.ExecuteScalar();
                     // Cria tabela de controle
                     CreateTableControl(command);
-                    // Atuaiza tabela de controle
+                    // Atualiza tabela de controle
                     InsertTableControl(command);
                 }
             }           
@@ -225,8 +225,9 @@ namespace XFunny.QAccess
                         sbQuery.AppendLine(string.Format("CREATE TABLE {0}.dbo.{1}", _Project.GetName().Name, pType.Name));
                         sbQuery.AppendLine(" (");
                         // Monta os campo e domínios da tabela
-                        foreach (var proper in pType.GetProperties().Where(p => p.PropertyType != typeof(QCollection<>)))
-                            if (proper.GetCustomAttributes(typeof(NonPersistentAttribute), false).Count() == 0)
+                        foreach (var proper in pType.GetProperties())
+                            if (proper.GetCustomAttributes(typeof(NonPersistentAttribute), false).Count() == 0 && 
+                                !(proper.PropertyType.IsGenericType && proper.PropertyType.GetGenericTypeDefinition().Equals(typeof(QCollection<>))))
                             {
                                 SqlDbType tipo;
                                 if (proper.PropertyType.IsSubclassOf(typeof(QObjectBase)))
@@ -392,15 +393,16 @@ namespace XFunny.QAccess
             sbValues.Append(" VALUES (");
             foreach (PropertyInfo proper in pObjectBase.GetType().GetProperties())
             {
-                if (proper.GetCustomAttributes(typeof(NonPersistentAttribute), false).Count() == 0)
+                if (proper.GetCustomAttributes(typeof(NonPersistentAttribute), false).Count() == 0 &&
+                    !(proper.PropertyType.IsGenericType && proper.PropertyType.GetGenericTypeDefinition().Equals(typeof(QCollection<>))))
                 {
                     if (first)
                     {                        
                         sbQuery.AppendLine(proper.Name);
                         sbValues.AppendLine();
-                        if(proper.PropertyType == typeof(string) || proper.PropertyType == typeof(char))
+                        if(proper.PropertyType == typeof(string) || proper.PropertyType == typeof(char) || proper.PropertyType == typeof(bool))
                             sbValues.Append(String.Format("'{0}'", proper.GetValue(pObjectBase, null)));
-                        else if (proper.PropertyType == typeof(Guid))                        
+                        else if (proper.PropertyType == typeof(Guid) || proper.PropertyType.IsSubclassOf(typeof(QObjectBase)))                        
                             sbValues.Append(String.Format("CONVERT( uniqueidentifier, '{0}')", proper.GetValue(pObjectBase, null)));                        
                         else
                             sbValues.Append(proper.GetValue(pObjectBase, null));
@@ -410,12 +412,12 @@ namespace XFunny.QAccess
                     {
                         sbQuery.Append(", ");
                         sbQuery.AppendLine(proper.Name);
-                        if (proper.PropertyType == typeof(string) || proper.PropertyType == typeof(char))
+                        if (proper.PropertyType == typeof(string) || proper.PropertyType == typeof(char) || proper.PropertyType == typeof(bool))
                         {
                             sbValues.Append(", ");
                             sbValues.Append(String.Format("'{0}'", proper.GetValue(pObjectBase, null)));
                         }
-                        else if (proper.PropertyType == typeof(Guid))
+                        else if (proper.PropertyType == typeof(Guid) || proper.PropertyType.IsSubclassOf(typeof(QObjectBase)))
                         {
                             sbValues.Append(", ");
                             sbValues.Append(String.Format("CONVERT( uniqueidentifier, '{0}')", proper.GetValue(pObjectBase, null)));
@@ -560,6 +562,23 @@ namespace XFunny.QAccess
         {
             Primary = 0,
             Foreign = 1
+        }
+
+        /// <summary>
+        /// Remove os objetos pesistidos
+        /// </summary>
+        /// <param name="qObjectBase">objeto removido</param>
+        internal void Delete(QObjectBase pObjectBase)
+        {
+            StringBuilder sbQuery = new StringBuilder();
+            sbQuery.AppendLine(string.Format("DELETE FROM {0}.dbo.{1}", _Project.GetName().Name, pObjectBase.GetType().Name));
+            sbQuery.AppendLine(string.Format("WHERE OCod = '{0}'", pObjectBase.OCod));
+            // Cria uma objeto para execcutar a query
+            using (var command = this._Connect.CreateCommand())
+            {
+                command.CommandText = sbQuery.ToString();
+                command.ExecuteNonQuery();
+            }
         }
     }
 }
