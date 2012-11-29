@@ -8,6 +8,7 @@ Com o objetivo em somente direcionar a atenção para o desenvolvimento da aplic
 == Objetos Classe ==
   * [QObjectBase]
   * [AssociationAttribute]
+  * [NonPersistentAttribute ]
 
 == Primeiros Passos ==
  * [ComoCriarBDComXFunny Como Criar Data Base com XFunny]
