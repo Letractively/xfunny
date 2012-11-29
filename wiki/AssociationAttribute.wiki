@@ -29,6 +29,6 @@ suporta:
  public class AssociationAttribute: Attribute
 }}}
 
-
+[XFunny]/[AssociationAttribute]
 
 <g:plusone size="tall "></g:plusone>
