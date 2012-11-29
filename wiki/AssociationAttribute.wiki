@@ -1,4 +1,4 @@
-#summary AssociationAttribute Classe representa a classe de persistência.
+#summary AssociationAttribute Classe representa à associação entre  classes de persistência.
 
 = Introdução =
 
