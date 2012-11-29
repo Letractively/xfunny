@@ -6,9 +6,9 @@ Neste exemplo é mostrado como é utilizado a classe [QObjectBase] para criar a 
 
 = Criando o projeto Exemplo01 =
 
-O primeiro passo é adicionar um projeto que utilizará a biblioteca XFunny. Para sigua os passos descritos abaixo.
+O primeiro passo é adicionar um projeto que utilizará a biblioteca XFunny. Para siga os passos descritos abaixo.
   Com o Visual Studio 2010 vá em * File -> New -> Project * defina um nome para o projeto.
-  O próximo passo é adicionar a eferência da biblioteca XFunny no projeto para isso clique com o botão direito do mouse sobre o diretório * References * na aba *.NET * procure a biblioteca XFunny 1.0.0.0 selecione-a e clique em Ok. 
+  O próximo passo é adicionar a referência da biblioteca XFunny no projeto para isso clique com o botão direito do mouse sobre o diretório * References * na aba *.NET * procure a biblioteca XFunny 1.0.0.0 selecione-a e clique em Ok. 
      
  http://xfunny.googlecode.com/svn/wiki/img/projeto.png
 
