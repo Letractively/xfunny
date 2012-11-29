@@ -4,7 +4,7 @@
 
 QObjectBase é a classe de persistência do XFunny.
 
-*Namespace:* XFunny.QObjectBase
+*Namespace:* XFunny.Access
 
 *Assembly:* XFunny.dll
 
