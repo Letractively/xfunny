@@ -1,4 +1,5 @@
 #summary Nesta página será mostrado como o XFunny cria a base de dados a partir da aplicação.
+#labels C,Framework,dotnet,VisualStudio2010,XFunny,QAccess,BancodeDados
 
 = Introdução =
 
@@ -25,6 +26,6 @@ Agora definiremos a string de conexão ela deve ter o nome * ConnectionString * 
 
 * _ Obs: o nome do catálogo da base de dados deve ter o mesmo nome do projeto para que sejam criadas as tabelas na base de dados. _ *
 
-[XFunny]/[ComoCriarBDComXFunny]
+[XFunny]/[ComoCriarBDComXFunny Como Criar Data Base com XFunny]
 
 <g:plusone size="maximun">Funny Systems</g:plusone>
