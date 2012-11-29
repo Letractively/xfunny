@@ -6,10 +6,10 @@ http://xfunny.googlecode.com/svn/wiki/img/XFunny.png
 Com o objetivo em somente direcionar a atenção para o desenvolvimento da aplicação sem se preocupar com modelagem e criação da base de dados nasceu o XFunny 1.0.0.0.
 
 == Objetos Classe ==
-  * QObjectBase
+  *QObjectBase
 
 == Como Utilizar ==
- * ComoCriarBDComXFunny
+ *ComoCriarBDComXFunny
 
 
 <g:plusone size="medium"></g:plusone>
