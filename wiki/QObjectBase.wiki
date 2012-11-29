@@ -21,6 +21,9 @@ A classe QObjectBase é utilizada para persistência de dados. Quando uma classe
  * Criação do identificador único OCod (_ Object Code _);
  * Suporta deleção do objeto;
 
-
+===Código C#===
+{{{
+public abstract class QObjectBase : IObject, IDisposable
+}}}
 
 <g:plusone size="tall "></g:plusone>
