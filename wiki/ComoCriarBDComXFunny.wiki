@@ -25,4 +25,6 @@ Agora definiremos a string de conexão ela deve ter o nome * ConnectionString * 
 
 * _ Obs: o nome do catálogo da base de dados deve ter o mesmo nome do projeto para que sejam criadas as tabelas na base de dados. _ *
 
+[XFunny]/[ComoCriarBDComXFunny]
+
 <g:plusone size="maximun">Funny Systems</g:plusone>
