@@ -1,13 +1,26 @@
-#summary One-sentence summary of this page.
+#summary QOjectBase Classe representa a classe de persistência.
 
-= Introduction =
+= Introdução =
 
-Add your content here.
+QObjectBase é a classe de persistência do XFunny.
+
+*Namespace:* XFunny.QObjectBase
+
+*Assembly:* XFunny.dll
+
+=Hierarquia=
+
+<wiki:comment>* System.Object</wiki:comment>
+  * System.Object
+    * QObjectBase
+
+= Detalhes =
+
+A classe QObjectBase é utilizada para persistência de dados. Quando uma classe herda a QObjectBase ela passa a suportar:
+ *  Persistência na Base de dados;
+ * Criação do identificador único OCod (_ Object Code _);
+ * Suporta deleção do objeto;
 
 
-= Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+<g:plusone size="tall "></g:plusone>
