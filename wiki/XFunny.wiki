@@ -1,0 +1,13 @@
+#summary Framework para persistência de dados
+http://xfunny.googlecode.com/svn/wiki/img/XFunny.png
+
+= Introdução =
+
+Com o objetivo em somente direcionar a atenção para o desenvolvimento da aplicação sem se preocupar com modelagem e criação da base de dados nasceu o XFunny 1.0.0.0.
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
