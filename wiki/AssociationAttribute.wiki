@@ -12,6 +12,7 @@ AssociationAttribute  é uma classe do tipo atributo do XFunny.
 
 <wiki:comment>* System.Object</wiki:comment>
   * System.Object
+   * System.Attribute
     * AssociationAttribute 
 
 = Detalhes =
@@ -20,7 +21,7 @@ A classe AssociationAttribute contém o atributo que informa que a classe que he
 
 suporta:
  * Associação agregada;
- * Associação composição;
+ * Associação composição.
 
 === Código C# ===
 {{{
