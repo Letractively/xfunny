@@ -17,15 +17,12 @@ O primeiro passo é adicionar um projeto que utilizará a biblioteca XFunny. Par
 
 Agora definiremos a string de conexão ela deve ter o nome * ConnectionString *  como mostrado na imagem abaixo:
 
-Página de definições:
+==== Página de definições: ====
       http://xfunny.googlecode.com/svn/wiki/img/setting.png
 
-Adicionando ConnectionString;
+==== Adicionando ConnectionString: ====
       http://xfunny.googlecode.com/svn/wiki/img/connectionstring.png
 
-Obs: o nome do catálogo da base de dados deve ter o mesmo nome do projeto para que seja criada as tabelas na base de dados
+* _ Obs: o nome do catálogo da base de dados deve ter o mesmo nome do projeto para que sejam criadas as tabelas na base de dados. _ *
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+<g:plusone size="maximun">Funny Systems</g:plusone>
