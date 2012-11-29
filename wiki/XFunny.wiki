@@ -9,6 +9,7 @@ Com o objetivo em somente direcionar a atenção para o desenvolvimento da aplic
   * [QObjectBase]
   * [AssociationAttribute]
   * [NonPersistentAttribute]
+  * [IObject]
 
 == Primeiros Passos ==
  * [ComoCriarBDComXFunny Como Criar Data Base com XFunny]
