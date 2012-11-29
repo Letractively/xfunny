@@ -1,13 +1,31 @@
-#summary One-sentence summary of this page.
+#summary AssociationAttribute Classe representa a classe de persistência.
 
-= Introduction =
+= Introdução =
 
-Add your content here.
+AssociationAttribute  é uma classe do tipo atributo do XFunny.
+
+*Namespace:* XFunny.Access
+
+*Assembly:* XFunny.dll
+
+=Hierarquia=
+
+<wiki:comment>* System.Object</wiki:comment>
+  * System.Object
+    * AssociationAttribute 
+
+= Detalhes =
+
+A classe AssociationAttribute contém o atributo que informa que a classe que herda o QObjectBase está relacionada com outra de forma explicita. Quando uma classe utiliza esse atributo em suas propriedade o XFunny faz as associações entre as duas classes.
+
+suporta:
+ * Associação agregada;
+ * Associação composição;
+
+Código C#
+{{{[AttributeUsage(AttributeTargets.Property)]
+    public class AssociationAttribute: Attribute}}}
 
 
-= Details =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+<g:plusone size="tall "></g:plusone>
