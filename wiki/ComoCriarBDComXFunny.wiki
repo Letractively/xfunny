@@ -1,5 +1,5 @@
 #summary Nesta página será mostrado como o XFunny cria a base de dados a partir da aplicação.
-#labels c,Framework,dotnet,VisualStudio2010,XFunny,QAccess,BancodeDados
+#labels CSharp,Framework,dotnet,VisualStudio2010,XFunny,QAccess,BancodeDados
 
 = Introdução =
 
