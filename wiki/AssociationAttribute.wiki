@@ -23,8 +23,10 @@ suporta:
  * Associação composição;
 
 Código C#
-{{{[AttributeUsage(AttributeTargets.Property)]
-    public class AssociationAttribute: Attribute}}}
+{{{
+ [AttributeUsage(AttributeTargets.Property)]
+ public class AssociationAttribute: Attribute
+}}}
 
 
 
