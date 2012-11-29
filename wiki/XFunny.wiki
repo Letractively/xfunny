@@ -10,7 +10,7 @@ Com o objetivo em somente direcionar a atenção para o desenvolvimento da aplic
   * [AssociationAttribute]
 
 == Primeiros Passos ==
- * [Como Usar Como CriarBDComXFunny]
+ * [ComoCriarBDComXFunny Como Criar Data Base com XFunny]
 
 
 <g:plusone size="medium"></g:plusone>
