@@ -26,4 +26,6 @@ A classe QObjectBase é utilizada para persistência de dados. Quando uma classe
 public abstract class QObjectBase : IObject, IDisposable
 }}}
 
+[XFunny]/[QObjectBase]
+
 <g:plusone size="tall "></g:plusone>
