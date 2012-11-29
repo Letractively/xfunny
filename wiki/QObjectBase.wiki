@@ -1,4 +1,5 @@
 #summary QOjectBase Classe representa a classe de persistência.
+#labels CSharp,Framework,XFunny,DataBase,VisualStudio2010
 
 = Introdução =
 
