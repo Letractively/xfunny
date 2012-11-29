@@ -28,4 +28,6 @@ suportar:
 public sealed class NonPersistentAttribute : Attribute
 }}}
 
+[XFunny]/[NonPersistentAttribute]
+
 <g:plusone size="tall "></g:plusone>
