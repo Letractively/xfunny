@@ -8,7 +8,7 @@ Com o objetivo em somente direcionar a atenção para o desenvolvimento da aplic
 == Objetos Classe ==
   * [QObjectBase]
 
-== Como Utilizar ==
+== Primeiros Passos ==
  * [ComoCriarBDComXFunny]
 
 
