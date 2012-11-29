@@ -1,0 +1,13 @@
+#Aqui é mostrado como o XFunny cria a base de dados a partir da aplicação.
+
+= Introdução =
+
+Neste exemplo é mostrado como é utilizado a classe http://code.google.com/p/xfunny/wiki/QObjectBase.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
