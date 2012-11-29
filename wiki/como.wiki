@@ -2,7 +2,7 @@
 
 = Introdução =
 
-Neste exemplo é mostrado como é utilizado a classe http://code.google.com/p/xfunny/wiki/QObjectBase.
+Neste exemplo é mostrado como é utilizado a classe [QObjectBase].
 
 
 = Details =
