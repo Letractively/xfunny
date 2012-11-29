@@ -2,10 +2,15 @@
 
 = Introdução =
 
-Neste exemplo é mostrado como é utilizado a classe [QObjectBase].
+Neste exemplo é mostrado como é utilizado a classe [QObjectBase] para criar a base de dados e as tabelas relacionadas as cada objeto.
 
+= Criando o projeto Exemplo01 =
+O primeiro passo é adicionar um projeto que utilizará a biblioteca XFunny. Para sigua os passos descritos abaixo.
+  Com o Visual Studio 2010 vá em * File -> New -> Project 
+ 
 
-= Details =
+= Definindo a string de conexão =
+
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
