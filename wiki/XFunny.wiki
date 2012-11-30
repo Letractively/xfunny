@@ -16,7 +16,7 @@ Com o objetivo em somente direcionar a atenção para o desenvolvimento da aplic
     * [IObject]
 * QConnecting
    * Classes
-      * [InitConnection ]
+      * [InitConnection]
 
 == Primeiros Passos ==
  * [ComoCriarBDComXFunny Como Criar Data Base com XFunny]
