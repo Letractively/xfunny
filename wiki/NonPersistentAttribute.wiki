@@ -4,7 +4,7 @@
 
 NonPersistentAttribute é a classe do tipo atributo do XFunny.
 
-*Namespace:* XFunny.Access
+*Namespace:* XFunny.QAccess
 
 *Assembly:* XFunny.dll
 
