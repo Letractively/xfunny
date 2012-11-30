@@ -1,0 +1,29 @@
+#summary InitConnection Classe que provê conexão com o SGBD.
+#labels CSharp,VisualStudio2012,XFunny,FunnySystems,SGBD,Mono,SqlServer,Framework
+
+= Introdução =
+
+InitConnection é a classe de provedora de conexão do XFunny.
+
+*Namespace:* XFunny.QConnecting
+
+*Assembly:* XFunny.dll
+
+=Hierarquia=
+
+<wiki:comment>* System.Object</wiki:comment>
+  * System.Object
+    * InitConnection 
+
+= Detalhes =
+
+A classe InitConnection é utilizada pelo XFunny para criar e gerenciar conexões feitas com o SGBD para as aplicações, sempre que uma aplicação está em execução é iniciada uma conexão.
+
+===Código C#===
+{{{
+static class InitConnection
+}}}
+
+[XFunny]/[InitConnection ]
+
+<g:plusone size="tall "></g:plusone>
