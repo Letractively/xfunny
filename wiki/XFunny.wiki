@@ -5,11 +5,18 @@ http://xfunny.googlecode.com/svn/wiki/img/XFunny.png
 
 Com o objetivo em somente direcionar a atenção para o desenvolvimento da aplicação sem se preocupar com modelagem e criação da base de dados nasceu o XFunny 1.0.0.0.
 
-== Objetos Classe ==
-  * [QObjectBase]
-  * [AssociationAttribute]
-  * [NonPersistentAttribute]
-  * [IObject]
+== Estrutura ==
+*QAccess
+  * Classes
+    * [QObjectBase]
+    * [AssociationAttribute]
+    * [NonPersistentAttribute]
+  *Interface
+    * [IObject]
+
+*QConnecting
+ *Classes
+   * [InitConnection ]
 
 == Primeiros Passos ==
  * [ComoCriarBDComXFunny Como Criar Data Base com XFunny]
