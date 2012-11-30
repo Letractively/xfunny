@@ -1,13 +1,29 @@
-#summary One-sentence summary of this page.
+#summary QConnect Classe que realiza as persistências na base de dados.
+#labels Mono,Framework,XFunny,SqlServer,SGBD,CSharp,VisualStudio2010
 
-= Introduction =
+= Introdução =
 
-Add your content here.
+QConnect  é a classe de persistência do XFunny.
 
+*Namespace:* XFunny.QAccess
 
-= Details =
+*Assembly:* XFunny.dll
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+=Hierarquia=
+
+<wiki:comment>* System.Object</wiki:comment>
+  * System.Object
+    * QConnect
+
+= Detalhes =
+
+A classe QConnect é utilizada para persistir os objetos de classes que herdaram da QBaseObject. Quando uma quando um objeto dispara uma ação de salvar ou deletar entra em ação a classe de persistência:
+
+===Código C#===
+{{{
+public sealed class QConnect : IDisposable
+}}}
+
+[XFunny]/[QConnect]
+
+<g:plusone size="tall "></g:plusone>
