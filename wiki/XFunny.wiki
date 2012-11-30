@@ -1,4 +1,5 @@
 #summary Framework para persistência de dados
+#labels Mono,Framework,BadodeDados,SGBD,CSharp,VisualStudio2010,XFunny,FunnySystems
 http://xfunny.googlecode.com/svn/wiki/img/XFunny.png
 
 = Introdução =
@@ -6,17 +7,16 @@ http://xfunny.googlecode.com/svn/wiki/img/XFunny.png
 Com o objetivo em somente direcionar a atenção para o desenvolvimento da aplicação sem se preocupar com modelagem e criação da base de dados nasceu o XFunny 1.0.0.0.
 
 == Estrutura ==
-*QAccess
-  * Classes
-    * [QObjectBase]
-    * [AssociationAttribute]
-    * [NonPersistentAttribute]
-  *Interface
+* QAccess
+   * Classes
+      * [QObjectBase]
+      * [AssociationAttribute]
+      * [NonPersistentAttribute]
+   * Interface
     * [IObject]
-
-*QConnecting
- *Classes
-   * [InitConnection ]
+* QConnecting
+   * Classes
+      * [InitConnection ]
 
 == Primeiros Passos ==
  * [ComoCriarBDComXFunny Como Criar Data Base com XFunny]
