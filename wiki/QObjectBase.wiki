@@ -1,11 +1,11 @@
 #summary QOjectBase Classe representa a classe de persistência.
-#labels CSharp,Framework,XFunny,DataBase,VisualStudio2010
+#labels CSharp,Framework,XFunny,DataBase,VisualStudio2010,Mono,SqlSever
 
 = Introdução =
 
 QObjectBase é a classe de persistência do XFunny.
 
-*Namespace:* XFunny.Access
+*Namespace:* XFunny.QAccess
 
 *Assembly:* XFunny.dll
 
