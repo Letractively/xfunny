@@ -24,6 +24,6 @@ A classe InitConnection é utilizada pelo XFunny para criar e gerenciar conexõe
 static class InitConnection
 }}}
 
-[XFunny]/[InitConnection ]
+[XFunny]/[InitConnection]
 
 <g:plusone size="tall "></g:plusone>
