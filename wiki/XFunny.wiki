@@ -21,6 +21,7 @@ Com o objetivo em somente direcionar a atenção para o desenvolvimento da aplic
 
 == Primeiros Passos ==
  * [ComoCriarBDComXFunny Como Criar Data Base com XFunny]
+ * [HerdandoQObjectBase Como Persistir Objetos]
 
 
 <g:plusone size="medium"></g:plusone>
