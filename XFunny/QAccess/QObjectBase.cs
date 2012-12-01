@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using XFunny.QFilter;
+using System.Collections;
+using XFunny.QConnecting;
 
 namespace XFunny.QAccess
 {
@@ -46,7 +49,7 @@ namespace XFunny.QAccess
         {
             if (InitConnection.Connect == null)
             {
-                InitConnection.CreateConnection();;
+                InitConnection.CreateConnection();
                 _Connection = InitConnection.Connect;                
             }
             else _Connection = InitConnection.Connect;
@@ -126,8 +129,18 @@ namespace XFunny.QAccess
                 if (_OCod.Equals(Guid.Empty))
                 {
                     _OCod = Guid.NewGuid();
-                    var v = this.GetType().GetProperty("Nome").GetValue(this, null);
+                    
                     this._Connection.Insert(this);
+                    //salva os objetos da coleção
+                    foreach (PropertyInfo proper in this.GetType().GetProperties())
+                    {
+                        if (proper.PropertyType.IsGenericType && proper.PropertyType.GetGenericTypeDefinition().Equals(typeof(QCollection<>)))
+                        {
+                            IEnumerable coll = (IEnumerable)proper.GetValue(this, null);
+                            foreach (var item in coll)                            
+                                ((QObjectBase)item).Save();                                                       
+                        }                            
+                    }
                     foreach (PropertyInfo proper in this.GetType().GetProperties().Where(p => p.PropertyType == typeof(XFunny.QFilter.QCollection<>)))
                     {
                         this.Connection.Insert(proper.GetValue(this, null) as QObjectBase);
@@ -139,7 +152,18 @@ namespace XFunny.QAccess
             }
             finally { _Connection.Close(); }
         }
-        
+
+        /// <summary>
+        /// Remove o objeto da base de dados
+        /// </summary>
+        public void Delete() 
+        {
+            _Connection.Open();
+            OnDeleting();
+            _Connection.Delete(this);
+            OnDeleted();
+        }
+
         /// <summary>
         /// Retorna o identificador do objeto
         /// </summary>

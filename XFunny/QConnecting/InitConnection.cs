@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Reflection;
-using System.Configuration;
 
-namespace XFunny.QAccess
+namespace XFunny.QConnecting
 {
     /// <summary>
     /// Inicializa a conexão com a base de dados

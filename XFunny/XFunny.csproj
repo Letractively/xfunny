@@ -29,6 +29,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>XFunny Framework.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>XFunny.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -48,13 +57,37 @@
     <Compile Include="QAccess\AssociationAttribute.cs" />
     <Compile Include="QFilter\Conditions.cs" />
     <Compile Include="QFilter\CSTyteOperator.cs" />
+    <Compile Include="QConnecting\InitConnection.cs" />
+    <Compile Include="QAccess\AssociationAttribute.cs" />
+    <Compile Include="QFilter\Conditions.cs" />
+    <Compile Include="QFilter\CSTyteOperator.cs" />
     <Compile Include="QAccess\InitConnection.cs" />
     <Compile Include="QAccess\IObject.cs" />
     <Compile Include="QAccess\NonPersistentAttribute.cs" />
     <Compile Include="QFilter\Operand.cs" />
     <Compile Include="QFilter\QCollection.cs" />
+    <Compile Include="QConnecting\QConnect.cs" />
+    <Compile Include="QFilter\Operand.cs" />
+    <Compile Include="QFilter\QCollection.cs" />
     <Compile Include="QAccess\QConnect.cs" />
     <Compile Include="QAccess\QObjectBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="source.extension.vsixmanifest" />
+    <Content Include="XFunny Framework.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XFunnyClasse.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ItemTemplates\XFunny\Persistent Class.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="XFunny.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
