@@ -6,6 +6,9 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
+[assembly: AssemblyDelaySign(false)]
+[assembly: AssemblyKeyName("")]
+[assembly: AssemblyKeyFile("XFunny.snk")]
 [assembly: AssemblyTitle("XFunny")]
 [assembly: AssemblyDescription("Quick Access a information")]
 [assembly: AssemblyConfiguration("")]
